@@ -29,7 +29,7 @@ export const cartSlice = createSlice({
       const objIndex = state.cart.findIndex((obj) => {
         return obj.id === action.payload.id;
       });
-      if (objIndex > 0 && action.payload && (action?.payload?.quantity ?? 0 ) > 0) {
+      if (objIndex >= 0 && action.payload && (action?.payload?.quantity ?? 0 ) > 0) {
         state.cart[objIndex] = action.payload;
       }
     },
