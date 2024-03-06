@@ -422,7 +422,7 @@ function ResponsiveAppBar() {
               Wishlist
             </Typography>
             <Box id="wishlist-modal-description" sx={{ mt: 2 }}>
-              <WishlistModalContent />
+              <WishlistModalContent onClose={handleCloseWishlist}/>
             </Box>
           </Box>
         </Modal>
@@ -444,7 +444,7 @@ function ResponsiveAppBar() {
               }}
               locale={'US'}
             >
-                <CartModalContent />
+                <CartModalContent onCheckout={handleCloseCart}/>
               </NextIntlClientProvider>
             </Box>
           </Box>

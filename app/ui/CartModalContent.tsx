@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import ImagePlaceholder from '@/app/ui/ImagePlaceholder';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -12,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/lib/store';
 import { removeFromCart, updateInCart } from '@/app/lib/cartSlice';
 import Snackbar from '@mui/material/Snackbar';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { useFormatter } from 'next-intl';
 import {
   GridRowsProp,
@@ -35,7 +36,11 @@ interface EditToolbarProps {
   ) => void;
 }
 
-export default function CartModalContent() {
+interface CartModalContentProps {
+  onCheckout: MouseEventHandler<HTMLButtonElement>;
+}
+
+export default function CartModalContent( { onCheckout }: CartModalContentProps ) {
   const cartState = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const format = useFormatter();
@@ -240,7 +245,7 @@ export default function CartModalContent() {
                     <Typography variant='h3'>{format.number(calculateTotal(), {style: 'currency', currency: 'USD'})}</Typography>
                     {/* TODO: Show savings here */}
                   </Stack>
-                  <Button variant='contained' sx={{
+                  <Button onClick={(e) => onCheckout(e)} variant='contained' sx={{
                     color: '#fff',
                     backgroundColor: 'primary.contrastText',
                     fontSize: 14,
@@ -273,6 +278,14 @@ export default function CartModalContent() {
           },
         }}
       />
+      <IconButton
+        onClick={(e) => onCheckout(e)}
+        sx={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px'
+        }}
+      ><CancelIcon/></IconButton>
     </>
   );
 

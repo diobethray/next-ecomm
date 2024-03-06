@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/lib/store';
 import { removeFromWishList } from '@/app/lib/wishlistSlice';
 import Snackbar from '@mui/material/Snackbar';
-import { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Close';
+import { MouseEventHandler, useState } from 'react';
 import {
   DataGrid,
   GridColDef,
@@ -14,7 +16,11 @@ import {
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 
-export default function WishlistModalContent() {
+interface WishlistModalContentProps {
+  onClose: MouseEventHandler<HTMLButtonElement>;
+}
+
+export default function WishlistModalContent({ onClose }: WishlistModalContentProps) {
   const wishlistState = useSelector((state: RootState) => state.wishlist);
   const dispatch = useDispatch();
   const wishlist = wishlistState.wishlist;
@@ -111,6 +117,14 @@ export default function WishlistModalContent() {
           },
         }}
       />
+      <IconButton
+        onClick={(e) => onClose(e)}
+        sx={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px'
+        }}
+      ><CancelIcon/></IconButton>
     </>
   );
 }
